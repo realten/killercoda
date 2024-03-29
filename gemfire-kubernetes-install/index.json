@@ -1,14 +1,28 @@
 {
   "title": "GemFire Kubernetes Install",
-  "description": "Kubernetes를 통해 GemFire를 설치하는  방법에 대해 설명한다.",
+  "description": "Kubernetes를 통해 GemFire를 설치하는 방법에 대해 설명한다.",
   "details": {
     "intro": {
       "text": "intro.md"
     },
+    "prepare": [
+      {
+        "title": "설치 전 사전 준비",
+        "text": "prepare/prepare.md"
+      }
+    ],
     "steps": [
       {
-        "title": "List all pods",
-        "text": "step1.md"
+        "title": "Install Cert Manager",
+        "text": "step1/step1.md"
+      },
+      {
+        "title": "Install Gemfire Cluster Operator",
+        "text": "step2/step2.md"
+      },
+      {
+        "title": "Gemfire Cluster 설치",
+        "text": "step3/step3.md"
       }
     ],
     "finish": {
