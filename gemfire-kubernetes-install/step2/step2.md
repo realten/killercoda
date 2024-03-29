@@ -9,24 +9,20 @@ Kubernetes 클러스터 네임스페이스에 대한 이미지 풀 시크릿을 
 
 `kubectl create secret docker-registry image-pull-secret --namespace=gemfire-system --docker-server=registry.tanzu.vmware.com --docker-username='USERNAME' --docker-password='PASSWD'`
 
-Gemfire Cluster Operator 설치를 완료하기 위해 `Helm`{{}}이나 `Carvel`{{}}을 이용할 수 있는데 이 문서에서는 `Helm`을 이용해 설치하는 방법을 설명합니다.
+Gemfire Cluster Operator 설치를 완료하기 위해 `Helm`{{}} 이나 `Carvel`{{}} 을 이용할 수 있는데 이 문서에서는 `Helm`{{}} 을 이용해 설치하는 방법을 설명합니다.
 
-Helm이 설치되어 있지 않은 경우 아래와 같이 설치를 진행합니다.
-
-- 설치 되어있으므로 수행하지 않음
-  ```shell
-  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-  chmod 700 get_helm.sh
-  ./get_helm.s
-  ```
 
 설치가 정상적으로 됐는지 버전을 확인합니다.
 
 `helm version`{{exec}}
 
+HELM_EXPERIMENTAL_OCI의 환경변수를 등록합니다.
+
+`export HELM_EXPERIMENTAL_OCI=1`{{exec}}
+
 Helm에 `registry.tanzu.vmware.com`{{}} 의 인증 정보를 등록합니다.
 
-Run: `helm registry login -u 'USERNAME' registry.tanzu.vmware.com`
+`helm registry login -u 'USERNAME' registry.tanzu.vmware.com`{{exec}}
 
 Helm을 통해 CRD(Custom Resource Definition) 및 GemFire Cluster Operator를 설치합니다.
 Cert Manager가 `cert-manager`{{}} Namespace가 아닌 곳에 설치된 경우 helm install 명령에 `--set certManagerNamespace=<namespace>`를 추가하여 해당 네임스페이스를 지정합니다.

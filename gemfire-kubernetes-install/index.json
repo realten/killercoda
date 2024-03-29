@@ -2,16 +2,19 @@
   "title": "GemFire Kubernetes Install",
   "description": "Kubernetes를 통해 GemFire를 설치하는 방법에 대해 설명한다.",
   "details": {
+    "assets": {
+      "host01": [
+        {"file": "init.sh", "target": "/ks", "chmod": "+x"}
+      ]
+    },
     "intro": {
       "text": "intro.md"
     },
-    "prepare": [
+    "steps": [
       {
         "title": "설치 전 사전 준비",
         "text": "prepare/prepare.md"
-      }
-    ],
-    "steps": [
+      },
       {
         "title": "Install Cert Manager",
         "text": "step1/step1.md"
