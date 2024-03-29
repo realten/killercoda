@@ -3,7 +3,7 @@
 Gemfire Cluster를 설치할 Namespace를 생성합니다.
 Namespace 명은 `gemfire-cluster`로 설정하였습니다.
 
-`kubectl create namespace gemfire-cluster`
+`kubectl create namespace gemfire-cluster`{{exec}}
 
 Kubernetes 클러스터 네임스페이스에 대한 이미지 풀 시크릿을 생성합니다.
 레지스트리에서 운영자 이미지를 획득하는 데 사용될 사용자 이름(USERNAME) 및 암호(PASSWD) 자격 증명을 VMware Tanzu Network에 액세스할 수 있는 권한이 있는 값으로 설정합니다.
@@ -40,15 +40,11 @@ spec:
 
 작성한 yaml 파일을 배포합니다.
 
-```shell
-kubectl create -f gemfire-cluster.yaml
-```
+`kubectl create -f gemfire-cluster.yaml`{{exec}}
 
 정상적으로 배포되면, 아래와 같이 출력됩니다.
 
-```shell
-kubectl -n gemfire-cluster get all -o wide
-```
+`kubectl -n gemfire-cluster get all -o wide`{{exec}}
 
 ```shell
 NAME                    READY   STATUS    RESTARTS   AGE     IP             NODE     NOMINATED NODE   READINESS GATES
