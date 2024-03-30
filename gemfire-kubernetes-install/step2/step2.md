@@ -16,10 +16,6 @@ Gemfire Cluster Operator 설치를 완료하기 위해 `Helm`{{}} 이나 `Carvel
 
 `helm version`{{exec}}
 
-HELM_EXPERIMENTAL_OCI의 환경변수를 등록합니다.
-
-`export HELM_EXPERIMENTAL_OCI=1`{{exec}}
-
 Helm에 `registry.tanzu.vmware.com`{{}} 의 인증 정보를 등록합니다.
 
 `helm registry login -u 'USERNAME' registry.tanzu.vmware.com`
@@ -34,10 +30,8 @@ CRD 설치는 아래 명령어를 입력합니다.
 정상적으로 설치 시 아래와 같이 출력됩니다.
 
 ```shell
-Pulled: registry.tanzu.vmware.com/tanzu-gemfire-for-kubernetes/gemfire-crd:2.3.0
-Digest: sha256:3ded4f8ff3490717a7d05363670336bf0d1ba771602ff57f18d744823e60d9d7
 NAME: gemfire-crd
-LAST DEPLOYED: Thu Dec  7 20:47:59 2023
+LAST DEPLOYED: Sat Mar 30 00:10:28 2024
 NAMESPACE: gemfire-system
 STATUS: deployed
 REVISION: 1
@@ -51,10 +45,8 @@ Operator 설치는 아래 명령어를 입력합니다.
 정상적으로 설치 시 아래와 같이 출력됩니다.
 
 ```shell
-Pulled: registry.tanzu.vmware.com/tanzu-gemfire-for-kubernetes/gemfire-operator:2.3.0
-Digest: sha256:33493c9a756e5a8b7c7aa550ac963c2124adc1eb09b45abe5e37a5a25e392d03
 NAME: gemfire-operator
-LAST DEPLOYED: Thu Dec  7 20:55:01 2023
+LAST DEPLOYED: Sat Mar 30 00:10:53 2024
 NAMESPACE: gemfire-system
 STATUS: deployed
 REVISION: 1

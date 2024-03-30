@@ -27,9 +27,14 @@
       {
         "title": "Gemfire Cluster 설치",
         "text": "step3/step3.md"
+      },
+      {
+        "title": "GemFire 접속 방법",
+        "text": "step3/step3.md"
       }
     ],
     "finish": {
+      "title": "설치 완료",
       "text": "finish.md"
     }
   },
