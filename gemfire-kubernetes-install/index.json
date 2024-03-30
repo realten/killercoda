@@ -8,7 +8,8 @@
       ]
     },
     "intro": {
-      "text": "intro.md"
+      "text": "intro.md",
+      "background": "init/background.sh"
     },
     "steps": [
       {

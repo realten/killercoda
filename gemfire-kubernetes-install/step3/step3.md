@@ -12,6 +12,8 @@ Kubernetes 클러스터 네임스페이스에 대한 이미지 풀 시크릿을 
 
 GemFireCluster를 작성합니다.
 
+`vi gemfire-cluster.yaml`{{exec}}
+
 ```yaml
 apiVersion: gemfire.vmware.com/v1
 kind: GemFireCluster

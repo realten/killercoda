@@ -22,7 +22,7 @@ HELM_EXPERIMENTAL_OCI의 환경변수를 등록합니다.
 
 Helm에 `registry.tanzu.vmware.com`{{}} 의 인증 정보를 등록합니다.
 
-`helm registry login -u 'USERNAME' registry.tanzu.vmware.com`{{exec}}
+`helm registry login -u 'USERNAME' registry.tanzu.vmware.com`
 
 Helm을 통해 CRD(Custom Resource Definition) 및 GemFire Cluster Operator를 설치합니다.
 Cert Manager가 `cert-manager`{{}} Namespace가 아닌 곳에 설치된 경우 helm install 명령에 `--set certManagerNamespace=<namespace>`를 추가하여 해당 네임스페이스를 지정합니다.
