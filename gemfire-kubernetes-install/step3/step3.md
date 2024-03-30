@@ -34,9 +34,10 @@ spec:
           template:
             spec:
               tolerations:
-              - key: "node-role.kubernetes.io/control-plane"
-                operator: "Exists"
-                effect: "NoSchedule"
+                - key: "node-role.kubernetes.io/control-plane"
+                  operator: "Exists"
+                  effect: "NoSchedule"
+              containers: []
 ```{{copy}}
 
 작성한 yaml 파일을 배포합니다.
@@ -48,19 +49,87 @@ spec:
 `kubectl -n gemfire-cluster get all -o wide`{{exec}}
 
 ```shell
-NAME                    READY   STATUS    RESTARTS   AGE     IP             NODE     NOMINATED NODE   READINESS GATES
-pod/gemfire-locator-0   1/1     Running   0          4m30s   10.244.2.196   node2    <none>           <none>
-pod/gemfire-server-0    1/1     Running   0          48s     10.244.1.29    node1    <none>           <none>
-pod/gemfire-server-1    0/1     Pending   0          48s     <none>         <none>   <none>           <none>
+NAME                    READY   STATUS    RESTARTS   AGE   IP            NODE           NOMINATED NODE   READINESS GATES
+pod/gemfire-locator-0   1/1     Running   0          1m   192.168.1.9    node01         <none>           <none>
+pod/gemfire-server-0    1/1     Running   0          20s  192.168.0.5    controlplane   <none>           <none>
 
-NAME                        TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                       AGE     SELECTOR
-service/gemfire-locator     ClusterIP   None         <none>        10334/TCP,7070/TCP,4321/TCP   4m30s   gemfire.vmware.com/app=gemfire-locator
-service/gemfire-locator-0   ClusterIP   None         <none>        10334/TCP,7070/TCP,4321/TCP   4m30s   statefulset.kubernetes.io/pod-name=gemfire-locator-0
-service/gemfire-server      ClusterIP   None         <none>        40404/TCP,7070/TCP,4321/TCP   49s     gemfire.vmware.com/app=gemfire-server
-service/gemfire-server-0    ClusterIP   None         <none>        40404/TCP,7070/TCP,4321/TCP   49s     statefulset.kubernetes.io/pod-name=gemfire-server-0
-service/gemfire-server-1    ClusterIP   None         <none>        40404/TCP,7070/TCP,4321/TCP   49s     statefulset.kubernetes.io/pod-name=gemfire-server-1
+NAME                        TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                       AGE   SELECTOR
+service/gemfire-locator     ClusterIP   None         <none>        10334/TCP,7070/TCP,4321/TCP   16m   gemfire.vmware.com/app=gemfire-locator
+service/gemfire-locator-0   ClusterIP   None         <none>        10334/TCP,7070/TCP,4321/TCP   16m   statefulset.kubernetes.io/pod-name=gemfire-locator-0
+service/gemfire-server      ClusterIP   None         <none>        40404/TCP,7070/TCP,4321/TCP   15m   gemfire.vmware.com/app=gemfire-server
+service/gemfire-server-0    ClusterIP   None         <none>        40404/TCP,7070/TCP,4321/TCP   15m   statefulset.kubernetes.io/pod-name=gemfire-server-0
 
-NAME                               READY   AGE     CONTAINERS   IMAGES
-statefulset.apps/gemfire-locator   1/1     4m30s   locator      registry.tanzu.vmware.com/pivotal-gemfire/vmware-gemfire:10.0.0
-statefulset.apps/gemfire-server    1/2     48s     server       registry.tanzu.vmware.com/pivotal-gemfire/vmware-gemfire:10.0.0
+NAME                               READY   AGE   CONTAINERS   IMAGES
+statefulset.apps/gemfire-locator   1/1     1m   locator      registry.tanzu.vmware.com/pivotal-gemfire/vmware-gemfire:10.0.0
+statefulset.apps/gemfire-server    1/1     20s  server       registry.tanzu.vmware.com/pivotal-gemfire/vmware-gemfire:10.0.0
 ```
+
+외부로 Pulse를 노출하기 위해 Service를 작성합니다.
+
+`vi lb-svc-mgmt-api.yaml`{{exec}}
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-svc-mgmt-api
+  namespace: gemfire-cluster
+spec:
+  selector:
+    gemfire.vmware.com/app: gemfire-locator
+  ports:
+    - name: management
+      port: 7070
+      targetPort: 7070
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
+  type: NodePort
+```{{copy}}
+```
+
+작성한 yaml 파일을 배포합니다.
+
+`kubectl create -f lb-svc-mgmt-api.yaml`{{exec}}
+
+접속할 Port를 확인하기 위해 다음 명령어를 수행합니다.
+
+`kubectl -n gemfire-cluster get all -o wide`{{exec}}
+
+```shell
+NAME                    READY   STATUS    RESTARTS   AGE   IP            NODE           NOMINATED NODE   READINESS GATES
+pod/gemfire-locator-0   1/1     Running   0          2m    192.168.1.9   node01         <none>           <none>
+pod/gemfire-server-0    1/1     Running   0          1m    192.168.0.5   controlplane   <none>           <none>
+
+NAME                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                       AGE   SELECTOR
+service/gemfire-locator     ClusterIP   None             <none>        10334/TCP,7070/TCP,4321/TCP   2m   gemfire.vmware.com/app=gemfire-locator
+service/gemfire-locator-0   ClusterIP   None             <none>        10334/TCP,7070/TCP,4321/TCP   2m   statefulset.kubernetes.io/pod-name=gemfire-locator-0
+service/gemfire-server      ClusterIP   None             <none>        40404/TCP,7070/TCP,4321/TCP   2m   gemfire.vmware.com/app=gemfire-server
+service/gemfire-server-0    ClusterIP   None             <none>        40404/TCP,7070/TCP,4321/TCP   2m   statefulset.kubernetes.io/pod-name=gemfire-server-0
+service/lb-svc-mgmt-api     NodePort    10.111.210.137   <none>        7070:32090/TCP                19s   gemfire.vmware.com/app=gemfire-locator
+
+NAME                               READY   AGE   CONTAINERS   IMAGES
+statefulset.apps/gemfire-locator   1/1     2m    locator      registry.tanzu.vmware.com/pivotal-gemfire/vmware-gemfire:10.0.0
+statefulset.apps/gemfire-server    1/1     1m    server       registry.tanzu.vmware.com/pivotal-gemfire/vmware-gemfire:10.0.0
+```
+
+pulse에 접속하기 위해 아래 그림과 같이 우측 상단의 메뉴 버튼을 클릭하고 `Traffic / Ports` 를 클릭합니다.
+
+![Traffic / Ports](./traffic-ports.png)
+
+Traffic Port Accessor 페이지에서 Host1의 Custom Ports를 NodePort로 설정하고 Access를 클릭합니다.
+
+![Traffic Port Accessor](TrafficPortAccessor.png)
+
+클릭 시 아래와 같은 404 Not Found 페이지가 출력됩니다.
+
+![404 Not Found](NotFound.png)
+
+주소 뒤에 `/pulse`를 붙여서 다시 접속하면 아래와 같이 pulse 화면이 출력됩니다.
+
+![Pulse Login Page](pulse-login.png)
+
+ID/PW를 admin/admin으로 입력하고 접속하면 대시보드를 볼 수 있습니다.
+
+![Pulse DashBoard](DashBoard.png)
