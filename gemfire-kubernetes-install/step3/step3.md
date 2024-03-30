@@ -28,6 +28,15 @@ spec:
     replicas: 1
   servers:
     replicas: 1
+    overrides:
+      statefulSet:
+        spec:
+          template:
+            spec:
+              tolerations:
+              - key: "node-role.kubernetes.io/control-plane"
+                operator: "Exists"
+                effect: "NoSchedule"
 ```{{copy}}
 
 작성한 yaml 파일을 배포합니다.
