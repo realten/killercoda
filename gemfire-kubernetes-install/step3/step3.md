@@ -26,19 +26,9 @@ spec:
     tls: {}
   locators:
     replicas: 1
-    resources:
-      requests:
-        memory: 1Gi
-      limits:
-        memory: 1Gi
   servers:
     replicas: 1
-    resources:
-      requests:
-        memory: 1Gi
-      limits:
-        memory: 1Gi
-```
+```{{copy}}
 
 작성한 yaml 파일을 배포합니다.
 
