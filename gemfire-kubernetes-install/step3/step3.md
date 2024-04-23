@@ -10,6 +10,31 @@ Kubernetes 클러스터 네임스페이스에 대한 이미지 풀 시크릿을 
 
 `kubectl create secret docker-registry image-pull-secret --namespace=gemfire-cluster --docker-server=registry.tanzu.vmware.com --docker-username='USERNAME' --docker-password='PASSWD'`
 
+GemFire Cluster 설치 전 Server에 적용할 cache.xml 을 작성합니다.
+
+`vi cache-config.yaml`{{exec}}
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cache-config
+  namespace: gemfire-cluster
+data:
+  cache.xml: |
+    <?xml version="1.0" encoding="UTF-8"?>
+    <cache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://geode.apache.org/schema/cache"
+           xsi:schemaLocation="http://geode.apache.org/schema/cache http://geode.apache.org/schema/cache/cache-1.0.xsd"
+           version="1.0" lock-lease="120" lock-timeout="60" search-timeout="300" is-server="false" copy-on-read="false">
+
+        <pdx read-serialized="true" ignore-unread-fields="true" persistent="true" />
+    </cache>
+```{{copy}}
+
+작성한 configMap을 생성합니다.
+
+`kubectl create -f cache-config.yaml`{{exec}}
+
 GemFireCluster를 작성합니다.
 
 `vi gemfire-cluster.yaml`{{exec}}
@@ -37,8 +62,16 @@ spec:
                 - key: "node-role.kubernetes.io/control-plane"
                   operator: "Exists"
                   effect: "NoSchedule"
-              containers: []
-```{{copy}}
+              containers:
+                - name: server
+                  volumeMounts:
+                    - name: cache-config
+                      mountPath: /cache
+              volumes:
+                - name: cache-config
+                  configMap:
+                    name: cache-config
+  ```{{copy}}
 
 작성한 yaml 파일을 배포합니다.
 
@@ -87,7 +120,6 @@ spec:
       timeoutSeconds: 10800
   type: NodePort
 ```{{copy}}
-```
 
 작성한 yaml 파일을 배포합니다.
 
