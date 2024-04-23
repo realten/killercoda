@@ -62,8 +62,10 @@ spec:
   - name: http
     port: 8080
     targetPort: 8080
-  type: ClusterIP 
+  type: NodePort 
 ```{{copy}}
+
+`kubectl create -f gmc-service.yaml`{{exec}}
 
 배포 완료 시 아래와 같습니다.
 
