@@ -6,9 +6,11 @@
 
 #### ImagePullSecret 생성
 
-`kubectl create secret docker-registry image-pull-secret --namespace=gemfire-cluster --docker-server=registry.tanzu.vmware.com --docker-username='USERNAME' --docker-password='PASSWD'`{{exce}}
+`kubectl create secret docker-registry image-pull-secret --namespace=gemfire-cluster --docker-server=registry.tanzu.vmware.com --docker-username='USERNAME' --docker-password='PASSWD'`{{exec}}
 
 #### StatefulSet 생성
+
+`vi gmc-deployment.yaml`{{exec}}
 
 ```yaml
 apiVersion: apps/v1
@@ -43,9 +45,9 @@ spec:
           emptyDir: {}
 ```{{copy}}
 
-```
-
 #### Service 생성
+
+`vi gmc-service.yaml`{{exec}}
 
 ```yaml
 apiVersion: v1
@@ -61,7 +63,7 @@ spec:
     port: 8080
     targetPort: 8080
   type: ClusterIP 
-```
+```{{copy}}
 
 배포 완료 시 아래와 같습니다.
 
