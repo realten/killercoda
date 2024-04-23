@@ -152,16 +152,16 @@ pulse에 접속하기 위해 아래 그림과 같이 우측 상단의 메뉴 버
 
 Traffic Port Accessor 페이지에서 Host1의 Custom Ports를 NodePort로 설정하고 Access를 클릭합니다.
 
-![Traffic Port Accessor](TrafficPortAccessor.png)
+![Traffic Port Accessor](./TrafficPortAccessor.png)
 
 클릭 시 아래와 같은 404 Not Found 페이지가 출력됩니다.
 
-![404 Not Found](NotFound.png)
+![404 Not Found](./NotFound.png)
 
 주소 뒤에 `/pulse`를 붙여서 다시 접속하면 아래와 같이 pulse 화면이 출력됩니다.
 
-![Pulse Login Page](pulse-login.png)
+![Pulse Login Page](./pulse-login.png)
 
 ID/PW를 admin/admin으로 입력하고 접속하면 대시보드를 볼 수 있습니다.
 
-![Pulse DashBoard](DashBoard.png)
+![Pulse DashBoard](./DashBoard.png)
