@@ -6,7 +6,7 @@
 
 #### ImagePullSecret 생성
 
-`kubectl create secret docker-registry image-pull-secret --namespace=gemfire-management-console --docker-server=registry.tanzu.vmware.com --docker-username='USERNAME' --docker-password='PASSWD'`{{exec}}
+`kubectl create secret docker-registry image-pull-secret --namespace=gemfire-management-console --docker-server=registry.tanzu.vmware.com --docker-username='USERNAME' --docker-password='PASSWD'`
 
 #### StatefulSet 생성
 
