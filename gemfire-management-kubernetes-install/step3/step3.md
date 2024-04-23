@@ -120,7 +120,6 @@ spec:
       timeoutSeconds: 10800
   type: NodePort
 ```{{copy}}
-```
 
 작성한 yaml 파일을 배포합니다.
 
