@@ -1,6 +1,6 @@
 {
-  "title": "GemFire + Maangement Kubernetes Install",
-  "description": "Kubernetes를 통해 GemFire + Management를 설치하는 방법에 대해 설명한다.",
+  "title": "GemFire + GMC Kubernetes Install",
+  "description": "Kubernetes를 통해 GemFire + GemFire Management Console을 설치하는 방법에 대해 설명한다.",
   "details": {
     "assets": {
       "host01": [
@@ -14,31 +14,35 @@
     "steps": [
       {
         "title": "GemFire Cluster 설치 전 사전 준비",
-        "text": "prepare/prepare.md"
+        "text": "gemfire/prepare/prepare.md"
       },
       {
         "title": "Install Cert Manager",
-        "text": "step1/step1.md"
+        "text": "gemfire/step1/step1.md"
       },
       {
         "title": "Install Gemfire Cluster Operator",
-        "text": "step2/step2.md"
+        "text": "gemfire/step2/step2.md"
       },
       {
         "title": "Gemfire Cluster 설치",
-        "text": "step3/step3.md"
+        "text": "gemfire/step3/step3.md"
       },
       {
         "title": "GemFire 접속 방법",
-        "text": "step4/step4.md"
+        "text": "gemfire/step4/step4.md"
       },
       {
-        "title": "GemFire Management 설치 전 사전 준비",
-        "text": "step5/step5.md"
+        "title": "GemFire Management Console 설치 전 사전 준비",
+        "text": "gemfireManagementConsole/prepare/prepare.md"
       },
       {
-        "title": "Install GemFire Management",
-        "text": "step6/step6.md"
+        "title": "Install GemFire Management Console",
+        "text": "gemfireManagementConsole/step1/step1.md"
+      },
+      {
+        "title": "Cluster 연결",
+        "text": "gemfireManagementConsole/step2/step2.md"
       }
     ],
     "finish": {
