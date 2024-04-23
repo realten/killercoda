@@ -1,6 +1,6 @@
 {
-  "title": "GemFire Kubernetes Install",
-  "description": "Kubernetes를 통해 GemFire를 설치하는 방법에 대해 설명한다.",
+  "title": "GemFire + Maangement Kubernetes Install",
+  "description": "Kubernetes를 통해 GemFire + Management를 설치하는 방법에 대해 설명한다.",
   "details": {
     "assets": {
       "host01": [
@@ -13,7 +13,7 @@
     },
     "steps": [
       {
-        "title": "설치 전 사전 준비",
+        "title": "GemFire Cluster 설치 전 사전 준비",
         "text": "prepare/prepare.md"
       },
       {
@@ -31,6 +31,14 @@
       {
         "title": "GemFire 접속 방법",
         "text": "step4/step4.md"
+      },
+      {
+        "title": "GemFire Management 설치 전 사전 준비",
+        "text": "step5/step5.md"
+      },
+      {
+        "title": "Install GemFire Management",
+        "text": "step6/step6.md"
       }
     ],
     "finish": {
