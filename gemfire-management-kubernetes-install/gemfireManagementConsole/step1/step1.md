@@ -45,6 +45,10 @@ spec:
           emptyDir: {}
 ```{{copy}}
 
+작성한 yaml 파일을 배포합니다.
+
+`kubectl create -f gmc-deployment.yaml`{{exec}}
+
 #### Service 생성
 
 `vi gmc-service.yaml`{{exec}}
@@ -64,6 +68,8 @@ spec:
     targetPort: 8080
   type: NodePort 
 ```{{copy}}
+
+작성한 yaml 파일을 배포합니다.
 
 `kubectl create -f gmc-service.yaml`{{exec}}
 
